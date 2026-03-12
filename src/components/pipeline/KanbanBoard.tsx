@@ -45,7 +45,15 @@ export const KanbanBoard = ({ prospects }: KanbanBoardProps) => {
     () =>
       stages.map((stage) => ({
         stage,
-        prospects: prospects.filter((p) => p.stage === stage),
+        prospects: prospects
+          .filter((p) => p.stage === stage)
+          .slice()
+          .sort((a, b) => {
+            const da = new Date(a.createdAt).getTime()
+            const db = new Date(b.createdAt).getTime()
+            // plus récent (date la plus grande) en haut
+            return db - da
+          }),
       })),
     [prospects],
   )
