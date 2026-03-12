@@ -6,7 +6,7 @@ import type { Niche } from '../types'
 export const Pipeline = () => {
   const { prospects } = useAppContext()
   const [nicheFilter, setNicheFilter] = useState<Niche | 'Toutes'>('Toutes')
-  const [assignedFilter, setAssignedFilter] = useState<'Tous' | 'Moi' | 'Associé'>('Tous')
+  const [assignedFilter, setAssignedFilter] = useState<'Tous' | 'Terence' | 'Néo'>('Tous')
 
   const filteredProspects = useMemo(
     () =>
@@ -43,13 +43,13 @@ export const Pipeline = () => {
           <select
             value={assignedFilter}
             onChange={(e) =>
-              setAssignedFilter(e.target.value as 'Tous' | 'Moi' | 'Associé')
+              setAssignedFilter(e.target.value as 'Tous' | 'Terence' | 'Néo')
             }
             className="rounded-lg border border-border-subtle bg-[#020617] px-3 py-1.5 text-text-primary outline-none focus:border-accent-cyan/60"
           >
             <option value="Tous">Assigné · Tous</option>
-            <option value="Moi">Moi</option>
-            <option value="Associé">Associé</option>
+            <option value="Terence">Terence</option>
+            <option value="Néo">Néo</option>
           </select>
         </div>
       </header>

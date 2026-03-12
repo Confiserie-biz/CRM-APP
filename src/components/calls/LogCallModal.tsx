@@ -12,7 +12,7 @@ type LogCallModalProps = {
     prospectName: string
     result: CallResult
     note: string
-    assignedTo: 'Moi' | 'Associé'
+    assignedTo: 'Terence' | 'Néo'
   }) => void
 }
 
@@ -21,7 +21,7 @@ export const LogCallModal = ({ isOpen, onClose, prospects, onSubmit }: LogCallMo
   const [prospectName, setProspectName] = useState('')
   const [result, setResult] = useState<CallResult>('Intéressé')
   const [note, setNote] = useState('')
-  const [assignedTo, setAssignedTo] = useState<'Moi' | 'Associé'>('Moi')
+  const [assignedTo, setAssignedTo] = useState<'Terence' | 'Néo'>('Terence')
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
@@ -42,7 +42,7 @@ export const LogCallModal = ({ isOpen, onClose, prospects, onSubmit }: LogCallMo
     setProspectName('')
     setResult('Intéressé')
     setNote('')
-    setAssignedTo('Moi')
+    setAssignedTo('Terence')
     onClose()
   }
 
@@ -112,12 +112,12 @@ export const LogCallModal = ({ isOpen, onClose, prospects, onSubmit }: LogCallMo
           <select
             value={assignedTo}
             onChange={(e) =>
-              setAssignedTo(e.target.value as 'Moi' | 'Associé')
+              setAssignedTo(e.target.value as 'Terence' | 'Néo')
             }
             className="w-full rounded-lg border border-border-subtle bg-[#020617] px-3 py-1.5 text-xs text-text-primary outline-none focus:border-accent-cyan/60"
           >
-            <option value="Moi">Moi</option>
-            <option value="Associé">Associé</option>
+            <option value="Terence">Terence</option>
+            <option value="Néo">Néo</option>
           </select>
         </div>
         <div className="flex justify-end gap-2">

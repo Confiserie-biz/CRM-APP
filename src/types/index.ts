@@ -17,7 +17,7 @@ export type Prospect = {
   niche: Niche
   stage: Stage
   dealValue: number
-  assignedTo: 'Moi' | 'Associé'
+  assignedTo: 'Terence' | 'Néo'
   hasWebsite: boolean
   objection: string
   lastContact: string
@@ -34,7 +34,7 @@ export type Call = {
   prospectName: string
   result: CallResult
   note: string
-  assignedTo: 'Moi' | 'Associé'
+  assignedTo: 'Terence' | 'Néo'
   calledAt: string
 }
 

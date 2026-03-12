@@ -6,7 +6,7 @@ type HotDealRow = {
   niche: string
   stage: string
   dealValue: number
-  assignedTo: 'Moi' | 'Associé'
+  assignedTo: 'Terence' | 'Néo'
   lastContact: string
 }
 

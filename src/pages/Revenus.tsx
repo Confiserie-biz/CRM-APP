@@ -22,7 +22,7 @@ export const Revenus = () => {
           acc[p.assignedTo] += p.dealValue
           return acc
         },
-        { Moi: 0, Associé: 0 },
+        { Terence: 0, Néo: 0 },
       ),
     [signedDeals],
   )
@@ -44,7 +44,7 @@ export const Revenus = () => {
     }
   }
 
-  const maxOwner = Math.max(byOwner.Moi, byOwner.Associé, 1)
+  const maxOwner = Math.max(byOwner.Terence, byOwner.Néo, 1)
 
   return (
     <div className="space-y-6">
@@ -52,7 +52,7 @@ export const Revenus = () => {
         <div>
           <h1 className="text-lg font-semibold text-text-primary">Revenus</h1>
           <p className="text-xs text-text-muted">
-            Suivi de ton objectif mensuel, CA signé et projection de fin de mois.
+            Suivi de ton objectif mensuel, CA signé et projection de fin de Terences.
           </p>
         </div>
       </header>
@@ -94,7 +94,7 @@ export const Revenus = () => {
             </p>
           </div>
           <div className="rounded-lg border border-border-subtle bg-[#020617]/60 px-3 py-2">
-            <p className="text-[11px] text-text-muted">Projection fin de mois</p>
+            <p className="text-[11px] text-text-muted">Projection fin de Terences</p>
             <p className="font-mono-kpi text-sm text-accent-cyan">
               {projection.toLocaleString('fr-FR')} €
             </p>
@@ -121,26 +121,26 @@ export const Revenus = () => {
         </div>
         <div className="card card-hover space-y-3 text-xs">
           <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-text-muted">
-            CA par associé
+            CA par Néo
           </p>
           <div className="space-y-3">
             <div>
               <div className="mb-1 flex items-center justify-between">
-                <span className="text-[11px] text-text-muted">Moi</span>
+                <span className="text-[11px] text-text-muted">Terence</span>
                 <span className="font-mono-kpi text-xs text-text-primary">
-                  {byOwner.Moi.toLocaleString('fr-FR')} €
+                  {byOwner.Terence.toLocaleString('fr-FR')} €
                 </span>
               </div>
-              <ProgressBar value={byOwner.Moi} max={maxOwner} showLabel={false} />
+              <ProgressBar value={byOwner.Terence} max={maxOwner} showLabel={false} />
             </div>
             <div>
               <div className="mb-1 flex items-center justify-between">
-                <span className="text-[11px] text-text-muted">Associé</span>
+                <span className="text-[11px] text-text-muted">Néo</span>
                 <span className="font-mono-kpi text-xs text-text-primary">
-                  {byOwner.Associé.toLocaleString('fr-FR')} €
+                  {byOwner.Néo.toLocaleString('fr-FR')} €
                 </span>
               </div>
-              <ProgressBar value={byOwner.Associé} max={maxOwner} showLabel={false} />
+              <ProgressBar value={byOwner.Néo} max={maxOwner} showLabel={false} />
             </div>
           </div>
         </div>

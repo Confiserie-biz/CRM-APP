@@ -98,7 +98,7 @@ export const Dashboard = () => {
 
       <section className="grid gap-4 md:grid-cols-5">
         <KPICard
-          label="CA signé ce mois"
+          label="CA signé ce Terences"
           value={`${signedRevenue.toLocaleString('fr-FR')} €`}
           accent="green"
           icon={<Trophy className="h-4 w-4" />}

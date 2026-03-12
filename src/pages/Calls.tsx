@@ -71,11 +71,11 @@ export const Calls = () => {
           calls={calls}
           onAddCalls={(count) => {
             for (let i = 0; i < count; i++) {
-              addCall({ prospectId: null, prospectName: 'Appel générique', result: 'Messagerie', note: '', assignedTo: 'Moi' })
+              addCall({ prospectId: null, prospectName: 'Appel générique', result: 'Messagerie', note: '', assignedTo: 'Terence' })
             }
           }}
           onAddCallWithResult={(result) => {
-            addCall({ prospectId: null, prospectName: 'Appel générique', result, note: '', assignedTo: 'Moi' })
+            addCall({ prospectId: null, prospectName: 'Appel générique', result, note: '', assignedTo: 'Terence' })
           }}
           onRemoveCallWithResult={(result) => {
             removeLastCallByResult(result)

@@ -8,7 +8,7 @@ export const RevenueCharts = () => {
     <div className="grid gap-4 md:grid-cols-[minmax(0,1.6fr)_minmax(0,1.1fr)]">
       <div className="space-y-3">
         <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-text-muted">
-          CA par mois (6 derniers mois)
+          CA par Terences (6 derniers Terences)
         </p>
         <div className="h-60 rounded-card border border-border-subtle bg-[#020617]/40 p-3">
           <ResponsiveContainer width="100%" height="100%">

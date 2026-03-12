@@ -43,10 +43,10 @@ export const RevenueChart = () => {
       <div className="flex items-center justify-between gap-4">
         <div>
           <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-text-muted">
-            CA par mois
+            CA par Terences
           </p>
           <p className="mt-1 text-xs text-text-muted">
-            Basé sur les deals signés (6 derniers mois).
+            Basé sur les deals signés (6 derniers Terences).
           </p>
         </div>
       </div>

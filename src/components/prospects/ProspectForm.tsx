@@ -15,7 +15,7 @@ export const ProspectForm = ({ initial, onSubmit }: ProspectFormProps) => {
     niche: initial?.niche ?? 'Plombier',
     stage: initial?.stage ?? 'Prospect',
     dealValue: initial?.dealValue ?? 1500,
-    assignedTo: initial?.assignedTo ?? 'Moi',
+    assignedTo: initial?.assignedTo ?? 'Terence',
     hasWebsite: initial?.hasWebsite ?? false,
     objection: initial?.objection ?? '',
     lastContact: initial?.lastContact ?? new Date().toISOString(),
@@ -105,12 +105,12 @@ export const ProspectForm = ({ initial, onSubmit }: ProspectFormProps) => {
         <select
           value={form.assignedTo}
           onChange={(e) =>
-            setForm({ ...form, assignedTo: e.target.value as 'Moi' | 'Associé' })
+            setForm({ ...form, assignedTo: e.target.value as 'Terence' | 'Néo' })
           }
           className="w-full rounded-lg border border-border-subtle bg-[#020617] px-3 py-1.5 text-xs text-text-primary outline-none focus:border-accent-cyan/60"
         >
-          <option value="Moi">Moi</option>
-          <option value="Associé">Associé</option>
+          <option value="Terence">Terence</option>
+          <option value="Néo">Néo</option>
         </select>
       </div>
       <div className="space-y-1">
