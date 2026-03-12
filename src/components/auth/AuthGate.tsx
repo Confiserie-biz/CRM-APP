@@ -1,4 +1,5 @@
-import { FormEvent, ReactNode, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
+import type { FormEvent, ReactNode } from 'react'
 
 const APP_PASSWORD = import.meta.env.VITE_APP_PASSWORD || 'crm-demo'
 
