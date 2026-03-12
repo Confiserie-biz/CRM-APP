@@ -15,6 +15,7 @@ export const Prospects = () => {
   const [editing, setEditing] = useState<Prospect | null>(null)
   const [isNewOpen, setIsNewOpen] = useState(false)
   const [isImportOpen, setIsImportOpen] = useState(false)
+   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc')
 
   const filtered = useMemo(
     () =>
@@ -36,6 +37,16 @@ export const Prospects = () => {
         return true
       }),
     [prospects, search, nicheFilter, stageFilter, assignedFilter],
+  )
+
+  const sorted = useMemo(
+    () =>
+      [...filtered].sort((a, b) => {
+        const da = new Date(a.createdAt).getTime()
+        const db = new Date(b.createdAt).getTime()
+        return sortDirection === 'asc' ? da - db : db - da
+      }),
+    [filtered, sortDirection],
   )
 
   const openEdit = (p: Prospect) => {
@@ -203,11 +214,23 @@ export const Prospects = () => {
               <option value="Moi">Moi</option>
               <option value="Associé">Associé</option>
             </select>
+            <button
+              type="button"
+              onClick={() =>
+                setSortDirection((prev) => (prev === 'desc' ? 'asc' : 'desc'))
+              }
+              className="rounded-lg border border-border-subtle px-3 py-1.5 text-[11px] text-text-muted hover:border-accent-cyan/40 hover:text-text-primary"
+            >
+              Tri&nbsp;:{' '}
+              {sortDirection === 'desc'
+                ? 'Plus récent → ancien'
+                : 'Plus ancien → récent'}
+            </button>
           </div>
         </div>
 
         <ProspectsTable
-          prospects={filtered}
+          prospects={sorted}
           onEdit={openEdit}
           onDelete={handleDelete}
         />
