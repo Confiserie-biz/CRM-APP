@@ -29,6 +29,17 @@ type AppContextValue = {
 const AppContext = createContext<AppContextValue | undefined>(undefined)
 
 export const AppProvider = ({ children }: { children: ReactNode }) => {
+  const createEmptyChecklist = (): DeliveryData['checklist'] => ({
+    forkRepo: false,
+    customBranding: false,
+    supabaseConfig: false,
+    openaiKey: false,
+    vercelDeploy: false,
+    onboardingCall: false,
+    stripeInvoice: false,
+    pdfGuide: false,
+  })
+
   const [prospectsState, setProspectsState] = useState<Prospect[]>(() => {
     if (typeof window === 'undefined') return initialProspects
     try {
@@ -75,6 +86,28 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   })
 
   const [loading] = useState(false)
+
+  // S'assurer que tout prospect en "Signé" ou "Livré" a bien une entrée de livraison
+  useEffect(() => {
+    setDeliveryDataState((prev) => {
+      const existingIds = new Set(prev.map((d) => d.prospectId))
+      const toAdd: DeliveryData[] = []
+
+      for (const p of prospectsState) {
+        if ((p.stage === 'Signé' || p.stage === 'Livré') && !existingIds.has(p.id)) {
+          toAdd.push({
+            prospectId: p.id,
+            checklist: createEmptyChecklist(),
+            appUrl: '',
+            internalNotes: '',
+          })
+        }
+      }
+
+      if (toAdd.length === 0) return prev
+      return [...prev, ...toAdd]
+    })
+  }, [prospectsState])
 
   useEffect(() => {
     if (typeof window === 'undefined') return
