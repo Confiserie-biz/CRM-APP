@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo, useState } from 'react'
+import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import type { ReactNode } from 'react'
 import type { Call, DeliveryData, Prospect, Stage } from '../types'
 import {
@@ -23,15 +23,94 @@ type AppContextValue = {
   markContactedToday: (prospectId: string) => void
   addCall: (call: Omit<Call, 'id' | 'calledAt'> & { calledAt?: string }) => void
   removeLastCallByResult: (result: Call['result']) => void
+  loading: boolean
 }
 
 const AppContext = createContext<AppContextValue | undefined>(undefined)
 
 export const AppProvider = ({ children }: { children: ReactNode }) => {
-  const [prospectsState, setProspectsState] = useState<Prospect[]>(initialProspects)
-  const [callsState, setCallsState] = useState<Call[]>(initialCalls)
-  const [monthlyTarget, setMonthlyTarget] = useState<number>(monthlyTargetDefault)
-  const [deliveryDataState, setDeliveryDataState] = useState<DeliveryData[]>(initialDeliveryData)
+  const [prospectsState, setProspectsState] = useState<Prospect[]>(() => {
+    if (typeof window === 'undefined') return initialProspects
+    try {
+      const raw = window.localStorage.getItem('crm_prospects')
+      if (!raw) return initialProspects
+      return JSON.parse(raw) as Prospect[]
+    } catch {
+      return initialProspects
+    }
+  })
+
+  const [callsState, setCallsState] = useState<Call[]>(() => {
+    if (typeof window === 'undefined') return initialCalls
+    try {
+      const raw = window.localStorage.getItem('crm_calls')
+      if (!raw) return initialCalls
+      return JSON.parse(raw) as Call[]
+    } catch {
+      return initialCalls
+    }
+  })
+
+  const [monthlyTarget, setMonthlyTarget] = useState<number>(() => {
+    if (typeof window === 'undefined') return monthlyTargetDefault
+    try {
+      const raw = window.localStorage.getItem('crm_monthlyTarget')
+      if (!raw) return monthlyTargetDefault
+      const value = Number.parseInt(raw, 10)
+      return Number.isNaN(value) ? monthlyTargetDefault : value
+    } catch {
+      return monthlyTargetDefault
+    }
+  })
+
+  const [deliveryDataState, setDeliveryDataState] = useState<DeliveryData[]>(() => {
+    if (typeof window === 'undefined') return initialDeliveryData
+    try {
+      const raw = window.localStorage.getItem('crm_deliveryData')
+      if (!raw) return initialDeliveryData
+      return JSON.parse(raw) as DeliveryData[]
+    } catch {
+      return initialDeliveryData
+    }
+  })
+
+  const [loading] = useState(false)
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    try {
+      window.localStorage.setItem('crm_prospects', JSON.stringify(prospectsState))
+    } catch {
+      // ignore write errors
+    }
+  }, [prospectsState])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    try {
+      window.localStorage.setItem('crm_calls', JSON.stringify(callsState))
+    } catch {
+      // ignore write errors
+    }
+  }, [callsState])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    try {
+      window.localStorage.setItem('crm_monthlyTarget', String(monthlyTarget))
+    } catch {
+      // ignore write errors
+    }
+  }, [monthlyTarget])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    try {
+      window.localStorage.setItem('crm_deliveryData', JSON.stringify(deliveryDataState))
+    } catch {
+      // ignore write errors
+    }
+  }, [deliveryDataState])
 
   const setProspects = (updater: (prev: Prospect[]) => Prospect[]) => {
     setProspectsState((prev) => updater(prev))
@@ -59,7 +138,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   }
 
   const addCall = (call: Omit<Call, 'id' | 'calledAt'> & { calledAt?: string }) => {
-    const id = `c-${callsState.length + 1}-${Date.now()}`
+    const id = `c-${Date.now()}`
     const calledAt = call.calledAt ?? new Date().toISOString()
     const fullCall: Call = { ...call, id, calledAt }
     setCalls((prev) => [fullCall, ...prev])
@@ -93,8 +172,9 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
       markContactedToday,
       addCall,
       removeLastCallByResult,
+      loading,
     }),
-    [prospectsState, callsState, monthlyTarget, deliveryDataState],
+    [prospectsState, callsState, monthlyTarget, deliveryDataState, loading],
   )
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>
